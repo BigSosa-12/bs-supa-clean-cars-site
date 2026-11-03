@@ -1,0 +1,18 @@
+{
+  "_readme": "Edit this file (or set SITE_URL at build time) to switch on features that need real business details. Leave a value empty to keep that feature hidden/disabled. Never put secret keys here: this file ships to the browser.",
+  "siteUrl": "",
+  "phone": "",
+  "email": "",
+  "formEndpoint": "",
+  "formAccessKey": "",
+  "googleProfileUrl": "",
+  "reviewCount": null,
+  "reviews": [],
+  "award": {
+    "title": "Best of Michigan — Regional Winner 2026",
+    "place": "1st place",
+    "category": "Car Washes and Detailing Services",
+    "year": 2026,
+    "source": ""
+  }
+}
