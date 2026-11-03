@@ -89,6 +89,8 @@ const root = document.documentElement;
   const form = $('#req-form'); if (!form) return;
   const status = $('#form-status'), submit = $('#f-submit'), label = $('.btn-label', submit);
   const t0 = Date.now();
+  const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  $('#f-date').min = todayISO();
   const labelOf = v => { const o = $(`#f-service option[value="${v}"]`); return o ? o.textContent : v; };
 
   // service buttons elsewhere on the page pre-select the service
@@ -119,9 +121,14 @@ const root = document.documentElement;
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) errs['e-email'] = 'Enter a valid email address, like name@example.com.';
     if (phone && phone.replace(/\D/g, '').length < 7) errs['e-phone'] = 'Enter a phone number with at least 7 digits.';
     if (!v('service')) errs['e-service'] = 'Please choose a service, or pick Free quote.';
+    if (!v('vehicle_type')) errs['e-vtype'] = 'Please tell us what kind of vehicle it is.';
+    if (!v('interior')) errs['e-interior'] = 'Please choose leather, upholstery, a mix, or not sure.';
+    if (!v('condition')) errs['e-cond'] = 'Please pick a condition from 1 (best) to 10 (worst).';
     if (!v('location')) errs['e-where'] = 'Please enter your town or ZIP code.';
+    if (!v('preferred_date')) errs['e-date'] = 'Please pick a convenient day.';
+    else if (v('preferred_date') < todayISO()) errs['e-date'] = 'Please pick today or a future day.';
     if (!form.elements.consent.checked) errs['e-consent'] = 'Please agree so we can use your details to reply.';
-    ['e-name', 'e-email', 'e-phone', 'e-service', 'e-where', 'e-consent'].forEach(id => setErr(id, errs[id] || ''));
+    ['e-name', 'e-email', 'e-phone', 'e-service', 'e-vtype', 'e-interior', 'e-cond', 'e-where', 'e-date', 'e-consent'].forEach(id => setErr(id, errs[id] || ''));
     return errs;
   }
   form.addEventListener('input', e => { const f = fieldOf(e.target); const err = f && $('.err', f); if (err && err.textContent) validate(); });
@@ -143,8 +150,10 @@ const root = document.documentElement;
     const payload = {
       subject: `Appointment request: ${labelOf(v('service'))} (${v('name')})`,
       name: v('name'), email: v('email'), phone: v('phone'),
-      service: labelOf(v('service')), vehicle: v('vehicle'), location: v('location'),
-      preferred_times: v('preferred_times'), message: v('message'),
+      service: labelOf(v('service')), vehicle_type: v('vehicle_type'), interior: v('interior'),
+      condition_1_to_10: `${v('condition')} of 10 (10 = worst)`, vehicle: v('vehicle'), location: v('location'),
+      preferred_date: v('preferred_date'), preferred_times: v('preferred_times'), message: v('message'),
+      ...(/formsubmit\.co/.test(config.formEndpoint) && { _subject: `Appointment request: ${labelOf(v('service'))} (${v('name')})`, _template: 'table', _captcha: 'false' }),
       ...(config.formAccessKey && { access_key: config.formAccessKey }),
     };
     submit.disabled = true; submit.setAttribute('aria-busy', 'true');
@@ -153,7 +162,7 @@ const root = document.documentElement;
     try {
       const res = await fetch(config.formEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload), signal: ctl.signal });
       let data = {}; try { data = await res.json(); } catch { /* non-JSON ok */ }
-      if (!res.ok || data.success === false || data.ok === false) throw new Error('bad response');
+      if (!res.ok || String(data.success) === 'false' || String(data.ok) === 'false') throw new Error('bad response');
       form.reset(); $$('.field', form).forEach(f => f.classList.remove('invalid'));
       status.className = 'status ok';
       status.textContent = 'Request sent. We will contact you to confirm a day and time. Your appointment is not booked until we confirm it, and a deposit payment alone does not reserve a time.';

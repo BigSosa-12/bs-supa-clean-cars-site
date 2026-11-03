@@ -9,11 +9,11 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="B's Supa Clean Cars LLC">
   <meta property="og:title" content="B's Supa Clean Cars LLC | Mobile Interior Detailing, Battle Creek MI">
-  <meta property="og:description" content="Supa clean. Every detail. Interior car and SUV detailing in Battle Creek and the surrounding 30-mile area.">
+  <meta property="og:description" content="Supa clean. 5 star satisfaction every time. Interior car and SUV detailing in Battle Creek and the surrounding 30-mile area.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="B's Supa Clean Cars LLC | Battle Creek, MI">
-  <meta name="twitter:description" content="Supa clean. Every detail. Interior car and SUV detailing in Battle Creek and the surrounding 30-mile area.">
+  <meta name="twitter:description" content="Supa clean. 5 star satisfaction every time. Interior car and SUV detailing in Battle Creek and the surrounding 30-mile area.">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <!--SEO-->
   <!--JSONLD-->
@@ -45,9 +45,9 @@
 <!-- ===================== HERO (animated) ===================== -->
 <div id="track" class="hero-track">
   <section class="stage" id="stage" aria-label="B's Supa Clean Cars introduction">
-    <h1 aria-label="B's Supa Clean Cars LLC. Supa clean. Every detail.">
+    <h1 aria-label="B's Supa Clean Cars LLC. Supa clean. 5 star satisfaction every time.">
       <div class="hl" id="l1" aria-hidden="true"><span>SUPA CLEAN.</span></div>
-      <div class="hl" id="l2" aria-hidden="true"><span>EVERY DETAIL.</span></div>
+      <div class="hl" id="l2" aria-hidden="true"><span>5 STAR SATISFACTION EVERY TIME</span></div>
     </h1>
     <div id="cap">Mobile interior detailing · Battle Creek, MI</div>
     <div id="glow"></div>
@@ -82,7 +82,7 @@
 <section class="hero-static" aria-label="B's Supa Clean Cars introduction">
   <div class="wrap">
     <p class="eyebrow">B's Supa Clean Cars LLC · Battle Creek, Michigan</p>
-    <h1>SUPA CLEAN.<br>EVERY DETAIL.</h1>
+    <h1>SUPA CLEAN.<br><span class="h1-sub">5 STAR SATISFACTION EVERY TIME</span></h1>
     <p class="intro-lead">Mobile interior car &amp; SUV detailing, serving Battle Creek and the surrounding 30-mile area.</p>
     <div class="cta-row">
       <a class="btn btn-red" href="#book">Book now</a>
@@ -372,7 +372,50 @@
       </div>
       <div class="two">
         <div class="field">
-          <label for="f-vehicle">Vehicle (year, make, model)</label>
+          <label for="f-vtype">What kind of vehicle? *</label>
+          <select id="f-vtype" name="vehicle_type" required aria-describedby="e-vtype h-vtype">
+            <option value="">Choose…</option>
+            <option value="Car (sedan, coupe, hatchback)">Car (sedan, coupe, hatchback)</option>
+            <option value="SUV">SUV</option>
+            <option value="Truck">Truck</option>
+            <option value="Van / minivan">Van / minivan</option>
+            <option value="Other">Other</option>
+          </select>
+          <p class="fine hint" id="h-vtype">Trucks, vans and other vehicles aren't on the price list. Pick Free quote above and we'll quote it.</p>
+          <p class="err" id="e-vtype" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="f-interior">Is the interior leather or upholstery? *</label>
+          <select id="f-interior" name="interior" required aria-describedby="e-interior">
+            <option value="">Choose…</option>
+            <option value="Leather">Leather</option>
+            <option value="Upholstery (cloth)">Upholstery (cloth)</option>
+            <option value="Mix of both">Mix of both</option>
+            <option value="Not sure">Not sure</option>
+          </select>
+          <p class="err" id="e-interior" role="alert"></p>
+        </div>
+      </div>
+      <fieldset class="field chips" aria-describedby="h-cond e-cond">
+        <legend>Interior condition, 1 (best) to 10 (worst) *</legend>
+        <div class="chip-row">
+          <input class="chip" type="radio" name="condition" id="c1" value="1"><label class="chip" for="c1">1</label>
+          <input class="chip" type="radio" name="condition" id="c2" value="2"><label class="chip" for="c2">2</label>
+          <input class="chip" type="radio" name="condition" id="c3" value="3"><label class="chip" for="c3">3</label>
+          <input class="chip" type="radio" name="condition" id="c4" value="4"><label class="chip" for="c4">4</label>
+          <input class="chip" type="radio" name="condition" id="c5" value="5"><label class="chip" for="c5">5</label>
+          <input class="chip" type="radio" name="condition" id="c6" value="6"><label class="chip" for="c6">6</label>
+          <input class="chip" type="radio" name="condition" id="c7" value="7"><label class="chip" for="c7">7</label>
+          <input class="chip" type="radio" name="condition" id="c8" value="8"><label class="chip" for="c8">8</label>
+          <input class="chip" type="radio" name="condition" id="c9" value="9"><label class="chip" for="c9">9</label>
+          <input class="chip" type="radio" name="condition" id="c10" value="10"><label class="chip" for="c10">10</label>
+        </div>
+        <p class="fine hint" id="h-cond">10 means the worst condition. Not sure? Your best guess is fine.</p>
+        <p class="err" id="e-cond" role="alert"></p>
+      </fieldset>
+      <div class="two">
+        <div class="field">
+          <label for="f-vehicle">Year, make &amp; model</label>
           <input id="f-vehicle" name="vehicle" type="text" autocomplete="off">
         </div>
         <div class="field">
@@ -381,9 +424,16 @@
           <p class="err" id="e-where" role="alert"></p>
         </div>
       </div>
-      <div class="field">
-        <label for="f-when">Preferred days &amp; times</label>
-        <input id="f-when" name="preferred_times" type="text" placeholder="e.g. weekday evenings, Saturday morning" autocomplete="off">
+      <div class="two">
+        <div class="field">
+          <label for="f-date">Convenient day *</label>
+          <input id="f-date" name="preferred_date" type="date" required aria-describedby="e-date">
+          <p class="err" id="e-date" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="f-when">Preferred time of day</label>
+          <input id="f-when" name="preferred_times" type="text" placeholder="e.g. morning, after 5pm" autocomplete="off">
+        </div>
       </div>
       <div class="field">
         <label for="f-msg">Anything we should know?</label>

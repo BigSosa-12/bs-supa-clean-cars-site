@@ -4,7 +4,7 @@
   --wrap:1180px;--head:64px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg);scroll-behavior:smooth}
+html{background:var(--bg);scroll-behavior:smooth;color-scheme:dark}
 body{font-family:'Inter Tight',system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5;font-size:17px}
 img{max-width:100%;display:block}
 a{color:var(--ink)}
@@ -59,7 +59,7 @@ h3{font-weight:600;letter-spacing:-.01em}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
 .hl{position:absolute;left:0;right:0;font-weight:400;font-size:clamp(40px,6.7vw,130px);line-height:1;letter-spacing:-.055em;white-space:nowrap;text-align:center;will-change:transform}
 #l1{top:calc(50% - .98em)}
-#l2{top:calc(50% + .03em)}
+#l2{font-size:calc(clamp(40px,6.7vw,130px)*.6);top:calc(50% + .06em)}
 #l1 span,#l2 span{display:inline-block}
 #l1 span{margin-right:15vw}
 #l2 span{margin-left:15vw}
@@ -85,6 +85,7 @@ h3{font-weight:600;letter-spacing:-.01em}
 /* static hero */
 .hero-static{display:none;padding:calc(var(--head) + 56px) 0 70px;border-bottom:1px solid var(--line)}
 .hero-static h1{font-weight:400;font-size:clamp(44px,9vw,120px);line-height:.98;letter-spacing:-.055em;margin:6px 0 18px}
+.hero-static .h1-sub{display:block;font-size:.42em;line-height:1.08;letter-spacing:-.04em;margin-top:.18em;max-width:16em}
 .static-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:40px}
 .static-grid figure{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:10px;background:var(--card)}
 .static-grid img{width:100%;height:100%;object-fit:cover}
@@ -160,9 +161,9 @@ html.static-hero body.legal .hero-static{display:none}
 .contact-list{list-style:none;margin-top:22px;display:grid;gap:6px}
 .form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,32px);display:grid;gap:16px}
 .field{display:grid;gap:6px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 label{font-size:14px;font-weight:500}
-input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;background:#0c0c0e;color:var(--ink);border:1px solid rgba(244,241,234,.28);border-radius:10px;padding:12px 14px;font:16px 'Inter Tight',sans-serif;min-height:46px}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{width:100%;background:#0c0c0e;color:var(--ink);border:1px solid rgba(244,241,234,.28);border-radius:10px;padding:12px 14px;font:16px 'Inter Tight',sans-serif;min-height:46px}
 textarea{resize:vertical}
 input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #fff;outline-offset:2px;border-color:#fff}
 .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--red-hi)}
@@ -172,6 +173,16 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px soli
 .check input{width:22px;height:22px;margin-top:2px;accent-color:var(--red)}
 .check .err{grid-column:1/-1}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.hint{margin:0}
+fieldset.field{border:0;padding:0;min-width:0}
+fieldset legend{font-size:14px;font-weight:500;margin-bottom:8px;padding:0}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+input.chip{position:absolute;opacity:0;width:1px;height:1px}
+label.chip{display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(244,241,234,.28);border-radius:10px;background:#0c0c0e;cursor:pointer;font-weight:600;transition:background .15s,border-color .15s}
+label.chip:hover{border-color:var(--ink)}
+input.chip:checked+label.chip{background:var(--red);border-color:var(--red);color:#fff}
+input.chip:focus-visible+label.chip{outline:2px solid #fff;outline-offset:2px}
+.field.invalid label.chip{border-color:var(--red-hi)}
 .status{padding:0;font-size:15.5px}
 .status:not(:empty){padding:14px 16px;border-radius:10px;border:1px solid var(--line)}
 .status.ok{border-color:#4fbf84;background:rgba(79,191,132,.1)}
