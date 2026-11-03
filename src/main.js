@@ -157,7 +157,7 @@ const root = document.documentElement;
       if (!res.ok || String(data.success) === 'false' || String(data.ok) === 'false') { console.warn('Form service did not accept the request:', res.status, data); throw new Error('bad response'); }
       form.reset(); $$('.field', form).forEach(f => f.classList.remove('invalid'));
       status.className = 'status ok';
-      status.textContent = 'Request sent. We will contact you to confirm a day and time. Your appointment is not booked until we confirm it, and a deposit payment alone does not reserve a time.';
+      status.textContent = 'Request sent. We will contact you to agree on your day. Your deposit and the agreed day set your appointment.';
     } catch {
       status.className = 'status bad';
       const alt = [config.phone && `call ${config.phone}`, config.email && `email ${config.email}`].filter(Boolean).join(' or ');

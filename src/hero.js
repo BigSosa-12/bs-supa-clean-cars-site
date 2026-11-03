@@ -159,7 +159,7 @@ void main(){
   }
 
   const RIB_A = .14, RIB_B = .63;
-  const el = { car: $('hero-car'), l1: $('l1'), l2: $('l2'), cap: $('cap'), rule: $('rule'), intro: $('intro'), cta: $('gridcta'),
+  const el = { car: $('hero-car'), l1: $('l1'), l2: $('l2'), smoke: $('hero-smoke'), smA: $('smoke-a'), smB: $('smoke-b'), rule: $('rule'), intro: $('intro'), cta: $('gridcta'),
     fade: ['cross', 'glow'].map($) };
   // Vehicle fade, driven by the hero's own scroll progress `p` (0..1), reversible. Opacity + translate only.
   const CAR = [[0, 1], [.1, .85], [.25, .55], [.4, .2], [.5, 0]], CAR_RISE = 30;
@@ -167,8 +167,19 @@ void main(){
     for (let i = 1; i < CAR.length; i++) if (pp <= CAR[i][0]) { const [a, x] = CAR[i - 1], [b, y] = CAR[i]; return mix(x, y, (pp - a) / (b - a)); }
     return 0;
   }
+  // Light red smoke: drifts up with scroll, thickest while the car dissolves into it, then clears.
+  const SMOKE = [[0, .2], [.08, .34], [.2, .52], [.34, .6], [.5, .34], [.62, 0]];
+  function smokeOpacity(pp) {
+    for (let i = 1; i < SMOKE.length; i++) if (pp <= SMOKE[i][0]) { const [a, x] = SMOKE[i - 1], [b, y] = SMOKE[i]; return mix(x, y, (pp - a) / (b - a)); }
+    return 0;
+  }
   function render() {
     const pp = p;
+    const so = smokeOpacity(pp);
+    el.smoke.style.opacity = so.toFixed(3);
+    el.smoke.style.visibility = so < .003 ? 'hidden' : 'visible';
+    el.smA.style.transform = `translate3d(0,${(6 - pp * 120).toFixed(2)}vh,0) scale(1.1)`;
+    el.smB.style.transform = `translate3d(0,${(12 - pp * 80).toFixed(2)}vh,0) scale(-1.3,1.3)`;
     const co = carOpacity(pp);
     el.car.style.opacity = co.toFixed(3);
     el.car.style.transform = `translate3d(0,${(-(1 - co) * CAR_RISE).toFixed(2)}px,0)`;
@@ -178,8 +189,6 @@ void main(){
     const run = mix(-50, runEnd, span(pp, 0, .58));
     el.l1.style.transform = `translate3d(${run}vw,${rise * RISE}vh,0)`;
     el.l2.style.transform = `translate3d(${-run}vw,${rise * RISE}vh,0)`;
-    el.cap.style.opacity = 1 - span(pp, .52, .57);
-    el.cap.style.transform = `translate(-50%,calc(-50% + ${rise * RISE}vh))`;
     const intro = 1 - span(pp, 0, .05);
     el.fade.forEach(n => n.style.opacity = intro);
     // intro block (name, what we do, area, booking) fades once the show starts; booking stays in the header
