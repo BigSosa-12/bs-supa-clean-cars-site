@@ -1,7 +1,7 @@
 {
   "_readme": "Edit this file (or set SITE_URL at build time) to switch on features that need real business details. Leave a value empty to keep that feature hidden/disabled. Never put secret keys here: this file ships to the browser.",
   "siteUrl": "",
-  "phone": "",
+  "phone": "913-201-3862",
   "email": "bssupacleancars@gmail.com",
   "formEndpoint": "https://formsubmit.co/ajax/bssupacleancars@gmail.com",
   "formAccessKey": "",
@@ -16,5 +16,6 @@
     "source": ""
   },
   "rating": 4.8,
-  "_reviewsNote": "rating/reviewCount copied from the owner's Google Business Profile on 2026-11-03; update when it changes. Testimonials are static HTML in index.html (verbatim Google reviews)."
+  "_reviewsNote": "rating/reviewCount copied from the owner's Google Business Profile on 2026-11-03; update when it changes. Testimonials are static HTML in index.html (verbatim Google reviews).",
+  "facebookUrl": "https://www.facebook.com/share/1FyZmhSUtE/"
 }

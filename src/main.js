@@ -40,6 +40,7 @@ const root = document.documentElement;
 /* ---------- Google profile link and rating (values come from site.config.json) ---------- */
 (() => {
   if (config.googleProfileUrl) $$('#google-link,[data-google-link]').forEach(a => { a.href = config.googleProfileUrl; });
+  if (config.facebookUrl) $$('[data-facebook-link]').forEach(a => { a.href = config.facebookUrl; });
   if (config.rating && $('#rating-num')) $('#rating-num').textContent = Number(config.rating).toFixed(1);
   if (config.rating) $$('.js-rating').forEach(n => { n.textContent = Number(config.rating).toFixed(1); });
   if (config.reviewCount && $('#review-count')) $('#review-count').textContent = String(config.reviewCount);

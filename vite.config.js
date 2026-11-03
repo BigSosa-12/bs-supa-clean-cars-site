@@ -31,9 +31,9 @@ const jsonld = {
   award: `${cfg.award.title}, ${cfg.award.place}, ${cfg.award.category}`,
   makesOffer: offers,
   ...(siteUrl && { url: siteUrl + '/', image: siteUrl + '/og-image.jpg' }),
-  ...(cfg.phone && { telephone: cfg.phone }),
+  ...(cfg.phone && { telephone: '+1' + cfg.phone.replace(/\D/g, '').slice(-10) }),
   ...(cfg.email && { email: cfg.email }),
-  ...(cfg.googleProfileUrl && { sameAs: [cfg.googleProfileUrl] }),
+  ...((cfg.googleProfileUrl || cfg.facebookUrl) && { sameAs: [cfg.googleProfileUrl, cfg.facebookUrl].filter(Boolean) }),
 };
 
 const head = (page) =>

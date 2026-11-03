@@ -62,7 +62,7 @@ h3{font-weight:600;letter-spacing:-.01em}
 [id]{scroll-margin-top:calc(var(--head) + 8px)}
 
 /* ===== hero (original Vante structure, adapted) ===== */
-.hero-track{height:700vh;position:relative}
+.hero-track{height:400vh;position:relative}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
 .hl{position:absolute;left:0;right:0;font-weight:400;font-size:clamp(40px,6.7vw,130px);line-height:1;letter-spacing:-.055em;white-space:nowrap;text-align:center;will-change:transform}
 /* first-paint = scroll position 0, so the headline never jumps when the animation script loads */
@@ -260,22 +260,72 @@ input.chip:focus-visible+label.chip{outline:2px solid #fff;outline-offset:2px}
 .legal-main p,.legal-main ul{margin-bottom:12px;color:#e2dfd8}
 .legal-main ul{margin-left:1.2em}
 
+/* ===== phone link, Facebook band ===== */
+.nav-call{display:none}
+.hd-phone{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;border-radius:99px;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);text-decoration:none;font:600 13px 'Inter Tight',sans-serif;letter-spacing:.02em;white-space:nowrap;transition:background .2s}
+.hd-phone:hover{background:rgba(255,255,255,.22)}
+.hd-phone svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+@media (max-width:1359px){.hd-phone-num{display:none}.hd-phone{width:38px;padding:0;justify-content:center}}
+.fb-band{padding:0 0 clamp(56px,8vw,100px)}
+.fb-card{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px 32px;padding:28px 32px;border-radius:20px}
+.fb-text{display:grid;gap:4px}
+.fb-text strong{font-size:clamp(22px,2.6vw,30px);font-weight:600;letter-spacing:-.025em}
+.fb-text span{color:#d8d5ce}
+
+/* ===== glass pass: translucent panels and tabs, no borders ===== */
+:root{--glass:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.035));--glass-red:linear-gradient(135deg,rgba(200,16,46,.30),rgba(255,255,255,.045));--glass-shadow:0 14px 44px rgba(0,0,0,.38)}
+body{background:transparent}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(55vw 45vw at 10% 8%,rgba(200,16,46,.22),transparent 62%),radial-gradient(45vw 40vw at 94% 52%,rgba(200,16,46,.13),transparent 62%),radial-gradient(42vw 32vw at 68% 100%,rgba(255,255,255,.07),transparent 65%)}
+.site-header{border-bottom:0;background:rgba(10,10,11,.42);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%)}
+.site-header.solid{background:rgba(10,10,11,.72)}
+.price-card,.quote-card,.promo,.form,.faq details,.tcard,.rating-badge,.notice,.fb-card,.cookie-dialog{border:0;background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);box-shadow:var(--glass-shadow)}
+.price-card,.tcard{background:radial-gradient(120% 55% at 50% 0%,rgba(200,16,46,.24),transparent 62%),var(--glass)}
+.tcard.feature,.tcard.cta,.rating-badge,.notice,.fb-card{background:var(--glass-red)}
+.form{background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.05))}
+.tcard:hover{border-color:transparent}
+.shot,.plaque,.static-grid figure,.promo-img{border:0}
+.shot,.plaque{box-shadow:var(--glass-shadow)}
+.btn-ghost{border-color:transparent;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.btn-ghost:hover{background:var(--ink);color:var(--bg)}
+.menu-btn{border:0;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.section.alt{background:rgba(255,255,255,.022);border:0}
+.site-footer{border-top:0;background:rgba(255,255,255,.02)}
+.hero-static{border-bottom:0}
+.deposit,.facts div,.tcard figcaption{border-top:0}
+.deposit{padding-top:2px}
+.status:not(:empty){border:0}
+.status.ok{background:rgba(79,191,132,.18)}
+.status.bad{background:rgba(200,16,46,.26)}
+.cookie-dialog::backdrop{background:rgba(5,5,6,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .price-card,.quote-card,.promo,.form,.faq details,.tcard,.rating-badge,.notice,.fb-card,.cookie-dialog{background-color:rgba(24,22,26,.94)}
+  .site-header{background:rgba(10,10,11,.92)}
+}
+@media (prefers-reduced-transparency:reduce){
+  .price-card,.quote-card,.promo,.form,.faq details,.tcard,.rating-badge,.notice,.fb-card,.cookie-dialog{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:#17151a}
+  .site-header,.nav{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0a0a0b}
+}
+
 /* ===== responsive ===== */
+@media (max-width:1180px){
+  .nav{display:none;position:fixed;top:var(--head);left:0;right:0;flex-direction:column;gap:0;margin:0;background:rgba(14,14,16,.72);-webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);padding:8px 20px 16px}
+  .nav.open{display:flex}
+  .nav a{padding:14px 0;font-size:17px}
+  .nav .nav-call{display:block;font-weight:600;color:#fff}
+  .menu-btn{display:inline-flex}
+  .head-actions{margin-left:auto}
+  .legal .head-actions .btn-ghost{display:none}
+}
 @media (max-width:1000px){
   .price-grid{grid-template-columns:1fr}
   .promo-grid{grid-template-columns:repeat(2,1fr)}
   .award,.book-grid{grid-template-columns:1fr}
   .tgrid{grid-template-columns:1fr 1fr}
   .tcard.feature,.tcard.wide{grid-column:span 2}
-  .nav{display:none;position:fixed;top:var(--head);left:0;right:0;flex-direction:column;gap:0;margin:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 20px 16px}
-  .nav.open{display:flex}
-  .nav a{padding:14px 0;font-size:17px;border-bottom:1px solid var(--line)}
-  .menu-btn{display:inline-flex}
-  .head-actions{margin-left:auto}
-  .legal .head-actions .btn-ghost{display:none}
   .gridcta{display:none}
 }
 @media (max-width:760px){
+  .hd-phone{display:none}
   .hero-car{left:50%;right:auto;margin:0 0 0 -52vw;width:104vw;bottom:calc(58px + 11svh)}
   .static-car img{width:104%;max-width:none;margin-left:-2%}
   body{font-size:16px}
