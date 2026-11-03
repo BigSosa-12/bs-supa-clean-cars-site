@@ -32,7 +32,9 @@ a{color:var(--ink)}
 .site-header{position:fixed;inset:0 0 auto 0;height:var(--head);z-index:50;display:flex;align-items:center;gap:20px;padding:0 max(20px,3vw);background:linear-gradient(rgba(10,10,11,.86),rgba(10,10,11,.55));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .site-header.solid{background:var(--bg)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:18px;letter-spacing:.01em;white-space:nowrap}
-.brand svg{width:22px;height:22px;fill:var(--red-hi);flex:none}
+.brand{min-width:0}
+.brand-logo{height:44px;width:auto;flex:none;display:block}
+.btn-sm{white-space:nowrap}
 .brand small{font-size:.62em;letter-spacing:.14em;color:var(--mid);font-weight:500}
 .nav{display:flex;gap:22px;margin-left:auto;font-size:14px;font-weight:500}
 .nav a{text-decoration:none;color:var(--ink);opacity:.86;padding:6px 0;border-bottom:1px solid transparent}
@@ -58,12 +60,13 @@ h3{font-weight:600;letter-spacing:-.01em}
 .hero-track{height:700vh;position:relative}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
 .hl{position:absolute;left:0;right:0;font-weight:400;font-size:clamp(40px,6.7vw,130px);line-height:1;letter-spacing:-.055em;white-space:nowrap;text-align:center;will-change:transform}
-#l1{top:calc(50% - .98em)}
-#l2{font-size:calc(clamp(40px,6.7vw,130px)*.6);top:calc(50% + .06em)}
+/* first-paint = scroll position 0, so the headline never jumps when the animation script loads */
+#l1{top:calc(50% - .98em);transform:translate3d(-50vw,34vh,0)}
+#l2{font-size:calc(clamp(40px,6.7vw,130px)*.6);top:calc(50% + .06em);transform:translate3d(50vw,34vh,0)}
 #l1 span,#l2 span{display:inline-block}
 #l1 span{margin-right:15vw}
 #l2 span{margin-left:15vw}
-#cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:15em;text-align:center;font-size:clamp(9px,.74vw,13px);font-weight:500;line-height:1.3;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+#cap{position:absolute;left:50%;top:50%;transform:translate(-50%,calc(-50% + 34vh));width:15em;text-align:center;font-size:clamp(9px,.74vw,13px);font-weight:500;line-height:1.3;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block}
 #glow{position:absolute;left:0;right:0;top:0;height:42%;background:linear-gradient(rgba(200,16,46,.16),rgba(200,16,46,0))}
 #cross{position:absolute;left:32px;right:32px;top:37.5%;height:1px;background:var(--line)}
@@ -81,6 +84,14 @@ h3{font-weight:600;letter-spacing:-.01em}
 .bot .r:after{content:"";width:22px;height:1px;background:var(--ink)}
 .bot .r:hover{color:var(--red-hi)}
 #name{position:absolute;z-index:5;left:0;top:0;padding:6px 11px;background:var(--ink);color:var(--bg);border-radius:99px;font-size:11.5px;font-weight:600;letter-spacing:.04em;pointer-events:none;opacity:0;transition:opacity .16s;white-space:nowrap}
+
+/* hero vehicle: decorative, blended into the page, faded by hero scroll progress (see hero.js) */
+.hero-car{position:absolute;z-index:0;left:0;right:0;margin-inline:auto;bottom:clamp(44px,7vh,90px);width:min(94vw,1360px,calc((100svh - var(--head) - 40px) * 1.8333));pointer-events:none;user-select:none;-webkit-user-select:none;mix-blend-mode:lighten;will-change:opacity,transform;contain:layout paint;
+  -webkit-mask-image:radial-gradient(ellipse 64% 64% at 50% 53%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 64% 64% at 50% 53%,#000 55%,transparent 100%)}
+.hero-car img{display:block;width:100%;height:auto;aspect-ratio:1408/768}
+.static-car{margin:34px 0 0;overflow:hidden;pointer-events:none;mix-blend-mode:lighten;
+  -webkit-mask-image:radial-gradient(ellipse 66% 66% at 50% 53%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 66% 66% at 50% 53%,#000 55%,transparent 100%)}
+.static-car img{display:block;width:min(1180px,100%);height:auto;aspect-ratio:1408/768;margin:0 auto}
 
 /* static hero */
 .hero-static{display:none;padding:calc(var(--head) + 56px) 0 70px;border-bottom:1px solid var(--line)}
@@ -210,10 +221,10 @@ input.chip:focus-visible+label.chip{outline:2px solid #fff;outline-offset:2px}
 .noscript{position:fixed;bottom:0;left:0;right:0;background:var(--red-deep);padding:10px 16px;font-size:14px;z-index:60}
 
 /* cookie dialog */
-.cookie-dialog{margin:auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:28px;max-width:min(520px,92vw);display:grid;gap:14px}
+.cookie-dialog{margin:auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:28px;max-width:min(520px,92vw);gap:14px}
+.cookie-dialog[open]{display:grid}
 .cookie-dialog::backdrop{background:rgba(5,5,6,.75)}
 .cookie-dialog h2{font-size:28px;margin:0}
-.cookie-dialog ul{margin-left:1.2em;display:grid;gap:8px}
 .cookie-dialog .btn{justify-self:start}
 
 /* legal */
@@ -238,8 +249,12 @@ input.chip:focus-visible+label.chip{outline:2px solid #fff;outline-offset:2px}
   .gridcta{display:none}
 }
 @media (max-width:760px){
+  .hero-car{left:50%;right:auto;margin:0 0 0 -75vw;width:150vw;bottom:62px}
+  .static-car img{width:150%;max-width:none;margin-left:-25%}
   body{font-size:16px}
-  .brand{font-size:15px}
+  .brand{font-size:15px;gap:8px}
+  .brand-logo{height:36px}
+  .brand-name{white-space:normal;line-height:1.05}
   .brand small{display:none}
   .intro{left:18px;right:18px;top:calc(var(--head) + 24px)}
   .bot{left:18px;right:18px;bottom:18px;grid-template-columns:1fr auto}
@@ -253,7 +268,20 @@ input.chip:focus-visible+label.chip{outline:2px solid #fff;outline-offset:2px}
   .site-header{gap:10px}
 }
 @media (max-width:420px){
-  .btn-sm{padding:0 14px}
+  .btn-sm{padding:0 12px}
+  .brand{font-size:13.5px;gap:6px}
+  .brand-logo{height:32px}
+  .head-actions{gap:6px}
+  .site-header{padding:0 12px}
+}
+@media (max-height:520px) and (orientation:landscape){
+  #l1{transform:translate3d(-50vw,26vh,0)}#l2{transform:translate3d(50vw,26vh,0)}#cap{transform:translate(-50%,calc(-50% + 26vh))}
+  .hero-car{left:auto;right:-2vw;margin:0;width:min(58vw,calc((100svh - var(--head) - 20px) * 1.8333));bottom:36px}
+  .intro{max-width:40vw;top:calc(var(--head) + 14px)}
+  .intro-lead{font-size:17px;margin-bottom:12px}
+  .eyebrow{margin-bottom:8px}
+  .bot p,.bot .mid{display:none}
+  .bot{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

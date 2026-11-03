@@ -25,7 +25,7 @@
 
 <header class="site-header" id="top">
   <a class="brand" href="#top" aria-label="B's Supa Clean Cars LLC, back to top">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.7 6.2 5.8 11.3 12 12-6.200.7-11.300 5.800-12 12-.7-6.200-5.800-11.300-12-12C6.200 11.300 11.300 6.200 12 0z"/></svg>
+    <img class="brand-logo" src="./img/logo-bs.webp" width="55" height="44" alt="" aria-hidden="true">
     <span class="brand-name">B's Supa Clean Cars <small>LLC</small></span>
   </a>
   <nav id="nav" class="nav" aria-label="Primary">
@@ -45,6 +45,9 @@
 <!-- ===================== HERO (animated) ===================== -->
 <div id="track" class="hero-track">
   <section class="stage" id="stage" aria-label="B's Supa Clean Cars introduction">
+    <div class="hero-car" id="hero-car" aria-hidden="true">
+      <img src="./img/hero-car-1000.webp" srcset="./img/hero-car-640.webp 640w, ./img/hero-car-1000.webp 1000w, ./img/hero-car-1408.webp 1408w" sizes="(max-width:760px) 150vw, min(94vw, 1360px)" width="1408" height="768" alt="" decoding="async" fetchpriority="high" draggable="false">
+    </div>
     <h1 aria-label="B's Supa Clean Cars LLC. Supa clean. 5 star satisfaction every time.">
       <div class="hl" id="l1" aria-hidden="true"><span>SUPA CLEAN.</span></div>
       <div class="hl" id="l2" aria-hidden="true"><span>5 STAR SATISFACTION EVERY TIME</span></div>
@@ -87,6 +90,9 @@
     <div class="cta-row">
       <a class="btn btn-red" href="#book">Book now</a>
       <a class="btn btn-ghost" href="#services">See prices</a>
+    </div>
+    <div class="static-car" aria-hidden="true">
+      <img src="./img/hero-car-1000.webp" srcset="./img/hero-car-640.webp 640w, ./img/hero-car-1000.webp 1000w, ./img/hero-car-1408.webp 1408w" sizes="(max-width:760px) 150vw, min(94vw, 1180px)" width="1408" height="768" alt="" decoding="async" draggable="false">
     </div>
     <div class="static-grid" role="list">
       <figure role="listitem"><img src="./img/merc-before-480.webp" srcset="./img/merc-before-480.webp 480w, ./img/merc-before-800.webp 800w" sizes="(min-width:900px) 30vw, 50vw" width="1252" height="939" alt="Front interior of a Mercedes-Benz before detailing, with dirty, stained beige carpet and a dusty center console." loading="eager" fetchpriority="high"><figcaption>Before</figcaption></figure>
@@ -467,7 +473,6 @@
       <details><summary>Is the quote really free?</summary><p>Yes. Free quotes are US$0 for cars and SUVs.</p></details>
       <details><summary>Do SUVs cost more?</summary><p>SUVs have their own prices: Standard US$175, Deep Clean US$225, Supa Clean US$250.</p></details>
       <details><summary>Do you store my card details?</summary><p>No. Deposits are paid on Stripe's hosted checkout page. This website never collects or sees card numbers.</p></details>
-      <details><summary>Does this site use cookies or trackers?</summary><p>No analytics, advertising or tracking cookies. See <button class="linklike" type="button" data-cookie-settings>cookie settings</button> and the <a href="./privacy.html">privacy policy</a>.</p></details>
     </div>
   </div>
 </section>
@@ -511,12 +516,7 @@
 <!-- Cookie settings -->
 <dialog id="cookie-dialog" class="cookie-dialog" aria-labelledby="ck-h">
   <h2 id="ck-h">Cookie settings</h2>
-  <p>This website does not set cookies and does not load analytics, advertising or other tracking tools. There is nothing optional to switch on or off.</p>
-  <ul>
-    <li><strong>Your choices:</strong> nothing on this site is stored in your browser to track you.</li>
-    <li><strong>Stripe checkout</strong> opens on stripe.com in a new tab. Stripe's own cookie and privacy terms apply there.</li>
-  </ul>
-  <p>If we ever add optional analytics or marketing tools, they will stay blocked until you accept them here. Details: <a href="./privacy.html">privacy policy</a>.</p>
+  <p>We don't use cookies or trackers to collect information about you on this site.</p>
   <button type="button" class="btn btn-red" id="ck-close">Close</button>
 </dialog>
 

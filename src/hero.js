@@ -108,9 +108,9 @@ void main(){
 
   /* ---------- layout ---------- */
   const GZ = 8;
-  let W = 1, H = 1, asp = 1, cols = 3, rows = 2, tanH = .3153, runEnd = 76;
+  let W = 1, H = 1, asp = 1, cols = 3, rows = 2, tanH = .3153, runEnd = 76, RISE = 34;
   function resize() {
-    W = innerWidth; H = innerHeight; asp = W / H;
+    W = innerWidth; H = innerHeight; asp = W / H; RISE = H < 520 ? 26 : 34;
     // headline must fully clear the screen at the end of its run, even on narrow phones
     const wide = Math.max(...['l1', 'l2'].map(id => { const s = $(id).firstElementChild; return s.offsetWidth + (id === 'l1' ? 0 : 0) + .15 * W; }));
     runEnd = Math.max(76, 50 + (wide / 2) / W * 100 + 3);
@@ -159,17 +159,27 @@ void main(){
   }
 
   const RIB_A = .14, RIB_B = .63;
-  const el = { l1: $('l1'), l2: $('l2'), cap: $('cap'), rule: $('rule'), intro: $('intro'), cta: $('gridcta'),
+  const el = { car: $('hero-car'), l1: $('l1'), l2: $('l2'), cap: $('cap'), rule: $('rule'), intro: $('intro'), cta: $('gridcta'),
     fade: ['cross', 'glow'].map($) };
+  // Vehicle fade, driven by the hero's own scroll progress `p` (0..1), reversible. Opacity + translate only.
+  const CAR = [[0, 1], [.1, .85], [.25, .55], [.4, .2], [.5, 0]], CAR_RISE = 30;
+  function carOpacity(pp) {
+    for (let i = 1; i < CAR.length; i++) if (pp <= CAR[i][0]) { const [a, x] = CAR[i - 1], [b, y] = CAR[i]; return mix(x, y, (pp - a) / (b - a)); }
+    return 0;
+  }
   function render() {
     const pp = p;
+    const co = carOpacity(pp);
+    el.car.style.opacity = co.toFixed(3);
+    el.car.style.transform = `translate3d(0,${(-(1 - co) * CAR_RISE).toFixed(2)}px,0)`;
+    el.car.style.visibility = co < .003 ? 'hidden' : 'visible';
     // headline runs right across the page in opposite directions
     const rise = 1 - out(span(pp, 0, .12));
     const run = mix(-50, runEnd, span(pp, 0, .58));
-    el.l1.style.transform = `translate3d(${run}vw,${rise * 34}vh,0)`;
-    el.l2.style.transform = `translate3d(${-run}vw,${rise * 34}vh,0)`;
+    el.l1.style.transform = `translate3d(${run}vw,${rise * RISE}vh,0)`;
+    el.l2.style.transform = `translate3d(${-run}vw,${rise * RISE}vh,0)`;
     el.cap.style.opacity = 1 - span(pp, .52, .57);
-    el.cap.style.transform = `translate(-50%,calc(-50% + ${rise * 34}vh))`;
+    el.cap.style.transform = `translate(-50%,calc(-50% + ${rise * RISE}vh))`;
     const intro = 1 - span(pp, 0, .05);
     el.fade.forEach(n => n.style.opacity = intro);
     // intro block (name, what we do, area, booking) fades once the show starts; booking stays in the header
