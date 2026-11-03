@@ -32,11 +32,14 @@
     <a href="#services">Services &amp; prices</a>
     <a href="#gallery">Gallery</a>
     <a href="#about">About</a>
-    <a href="#reviews">Recognition</a>
+    <a href="#reviews">Reviews</a>
     <a href="#area">Service area</a>
     <a href="#faq">FAQ</a>
   </nav>
   <div class="head-actions">
+    <a class="g-pill" href="https://maps.app.goo.gl/F6YkiiZANLB92ABx8" target="_blank" rel="noopener noreferrer" data-google-link aria-label="Rated 4.8 out of 5 on Google from 71 reviews. Opens our Google page in a new tab.">
+      <span class="g-star" aria-hidden="true">★</span><span class="g-num js-rating" aria-hidden="true">4.8</span><span class="g-word" aria-hidden="true">Google</span>
+    </a>
     <a class="btn btn-red btn-sm" href="#book">Book now</a>
     <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span class="menu-label">Menu</span><b aria-hidden="true"></b></button>
   </div>
@@ -46,7 +49,7 @@
 <div id="track" class="hero-track">
   <section class="stage" id="stage" aria-label="B's Supa Clean Cars introduction">
     <div class="hero-car" id="hero-car" aria-hidden="true">
-      <img src="./img/hero-car-1000.webp" srcset="./img/hero-car-640.webp 640w, ./img/hero-car-1000.webp 1000w, ./img/hero-car-1408.webp 1408w" sizes="(max-width:760px) 150vw, min(94vw, 1360px)" width="1408" height="768" alt="" decoding="async" fetchpriority="high" draggable="false">
+      <img src="./img/hero-car-1000.webp" srcset="./img/hero-car-640.webp 640w, ./img/hero-car-1000.webp 1000w, ./img/hero-car-1408.webp 1408w, ./img/hero-car-1698.webp 1698w" sizes="(max-width:760px) 104vw, min(80vw, 1160px)" width="1698" height="926" alt="" decoding="async" fetchpriority="high" draggable="false">
     </div>
     <h1 aria-label="B's Supa Clean Cars LLC. Supa clean. 5 star satisfaction every time.">
       <div class="hl" id="l1" aria-hidden="true"><span>SUPA CLEAN.</span></div>
@@ -92,7 +95,7 @@
       <a class="btn btn-ghost" href="#services">See prices</a>
     </div>
     <div class="static-car" aria-hidden="true">
-      <img src="./img/hero-car-1000.webp" srcset="./img/hero-car-640.webp 640w, ./img/hero-car-1000.webp 1000w, ./img/hero-car-1408.webp 1408w" sizes="(max-width:760px) 150vw, min(94vw, 1180px)" width="1408" height="768" alt="" decoding="async" draggable="false">
+      <img src="./img/hero-car-1000.webp" srcset="./img/hero-car-640.webp 640w, ./img/hero-car-1000.webp 1000w, ./img/hero-car-1408.webp 1408w, ./img/hero-car-1698.webp 1698w" sizes="(max-width:760px) 104vw, min(90vw, 1000px)" width="1698" height="926" alt="" decoding="async" draggable="false">
     </div>
     <div class="static-grid" role="list">
       <figure role="listitem"><img src="./img/merc-before-480.webp" srcset="./img/merc-before-480.webp 480w, ./img/merc-before-800.webp 800w" sizes="(min-width:900px) 30vw, 50vw" width="1252" height="939" alt="Front interior of a Mercedes-Benz before detailing, with dirty, stained beige carpet and a dusty center console." loading="eager" fetchpriority="high"><figcaption>Before</figcaption></figure>
@@ -284,8 +287,8 @@
 <!-- ===================== RECOGNITION / REVIEWS ===================== -->
 <section class="section" id="reviews" aria-labelledby="reviews-h">
   <div class="wrap">
-    <p class="eyebrow">Recognition</p>
-    <h2 id="reviews-h">Local recognition.</h2>
+    <p class="eyebrow">Recognition &amp; reviews</p>
+    <h2 id="reviews-h">Recognized locally. Recommended by customers.</h2>
     <div class="award">
       <a class="plaque" href="./img/award-plaque-1200.webp" target="_blank" rel="noopener">
         <img src="./img/award-plaque-480.webp" srcset="./img/award-plaque-480.webp 480w, ./img/award-plaque-800.webp 800w, ./img/award-plaque-1200.webp 1200w" sizes="(min-width:900px) 45vw, 92vw" width="2048" height="1652" loading="lazy" alt="Gold plaque reading Best of Michigan Regional Winner 2026, 1st place, B's Supa Clean Cars LLC, Car Washes and Detailing Services, owner Brian Battle.">
@@ -300,12 +303,49 @@
           <div><dt>Recipient</dt><dd>B's Supa Clean Cars LLC (owner: Brian Battle)</dd></div>
         </dl>
         <p class="fine">As engraved on our 2026 plaque.</p>
+        <div class="rating-badge">
+          <p class="rating-num" id="rating-num">4.8</p>
+          <div class="rating-body">
+            <p class="stars" role="img" aria-label="Rated 4.8 out of 5 stars on Google">★★★★★</p>
+            <p class="rating-meta"><strong id="review-count">71</strong> Google reviews</p>
+          </div>
+          <a class="btn btn-ghost btn-sm" id="google-link" href="https://maps.app.goo.gl/F6YkiiZANLB92ABx8" target="_blank" rel="noopener noreferrer">Read on Google<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
       </div>
     </div>
-    <div id="google-reviews" hidden>
+
+    <div class="rev-stage">
       <h3 class="group-h">What customers say</h3>
-      <div id="review-list" class="review-list"></div>
-      <p><a id="google-link" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer">Read all reviews on Google<span class="sr-only"> (opens in a new tab)</span></a></p>
+      <div class="tgrid">
+        <figure class="tcard feature">
+          <blockquote><p>Best service in Town you'll be loosing for not getting your detail work done here, want a clean car? I mean so clean your Micheal kors will turn in to Louis Vuitton real quick make the smart move and get your Detail Today!!</p></blockquote>
+          <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="who">Kwame</span><span class="src">Google review</span></figcaption>
+        </figure>
+        <figure class="tcard">
+          <blockquote><p>One of the best details I've had on my vehicle.</p></blockquote>
+          <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="who">Thomas G. · Local Guide</span><span class="src">Google review</span></figcaption>
+        </figure>
+        <figure class="tcard">
+          <blockquote><p>Very polite and clearly passionate about his work. Respectful and he arrived quick and took care of business.</p></blockquote>
+          <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="who">Dylan E.</span><span class="src">Google review</span></figcaption>
+        </figure>
+        <figure class="tcard">
+          <blockquote><p>Had my car detailed car looks outstanding after smells great looks great! Thanks so much</p></blockquote>
+          <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="who">President Donkey Kong</span><span class="src">Google review</span></figcaption>
+        </figure>
+        <figure class="tcard">
+          <blockquote><p>Most professionalism discrete, swift, and excellent customer service I will recommend to everyone is worth the patience time and money</p></blockquote>
+          <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="who">leonrueim</span><span class="src">Google review</span></figcaption>
+        </figure>
+        <figure class="tcard wide">
+          <blockquote><p>I HIGHLY RECOMMEND BRIAN HE DID A AWSOME JOB ON MY TRUCK!! IF YOUR LOOKING FOR SOMEONE TO DETAIL YOUR VEHICLE, HE IS DEFINITELY THE MAN TO SEE</p></blockquote>
+          <figcaption><span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="who">Sarina H.</span><span class="src">Google review</span></figcaption>
+        </figure>
+        <div class="tcard cta">
+          <p>Every review above is a real five-star Google review.</p>
+          <a class="btn btn-red" href="https://maps.app.goo.gl/F6YkiiZANLB92ABx8" target="_blank" rel="noopener noreferrer" data-google-link>Read all reviews on Google<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

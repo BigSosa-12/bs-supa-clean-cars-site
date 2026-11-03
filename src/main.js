@@ -37,21 +37,12 @@ const root = document.documentElement;
   if (config.email) show('#contact-email', 'mailto:' + config.email, config.email);
 })();
 
-/* ---------- Google reviews (only real, supplied excerpts) ---------- */
+/* ---------- Google profile link and rating (values come from site.config.json) ---------- */
 (() => {
-  const box = $('#google-reviews'); if (!box) return;
-  const list = $('#review-list'), link = $('#google-link');
-  const reviews = Array.isArray(config.reviews) ? config.reviews : [];
-  if (reviews.length) {
-    reviews.forEach(r => {
-      const d = document.createElement('blockquote'); d.className = 'review';
-      const p = document.createElement('p'); p.textContent = '“' + r.text + '”';
-      const c = document.createElement('cite'); c.textContent = '— ' + (r.author || 'Google reviewer');
-      d.append(p, c); list.append(d);
-    });
-  }
-  if (config.googleProfileUrl) link.href = config.googleProfileUrl; else link.hidden = true;
-  if (reviews.length || config.googleProfileUrl) box.hidden = false;
+  if (config.googleProfileUrl) $$('#google-link,[data-google-link]').forEach(a => { a.href = config.googleProfileUrl; });
+  if (config.rating && $('#rating-num')) $('#rating-num').textContent = Number(config.rating).toFixed(1);
+  if (config.rating) $$('.js-rating').forEach(n => { n.textContent = Number(config.rating).toFixed(1); });
+  if (config.reviewCount && $('#review-count')) $('#review-count').textContent = String(config.reviewCount);
 })();
 
 /* ---------- gallery lightbox ---------- */

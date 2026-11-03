@@ -6,7 +6,7 @@
   "formEndpoint": "https://formsubmit.co/ajax/bssupacleancars@gmail.com",
   "formAccessKey": "",
   "googleProfileUrl": "https://maps.app.goo.gl/F6YkiiZANLB92ABx8",
-  "reviewCount": null,
+  "reviewCount": 71,
   "reviews": [],
   "award": {
     "title": "Best of Michigan \u2014 Regional Winner 2026",
@@ -14,5 +14,7 @@
     "category": "Car Washes and Detailing Services",
     "year": 2026,
     "source": ""
-  }
+  },
+  "rating": 4.8,
+  "_reviewsNote": "rating/reviewCount copied from the owner's Google Business Profile on 2026-11-03; update when it changes. Testimonials are static HTML in index.html (verbatim Google reviews)."
 }
