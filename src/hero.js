@@ -160,7 +160,7 @@ void main(){
 
   const RIB_A = .14, RIB_B = .63;
   const el = { car: $('hero-car'), l1: $('l1'), l2: $('l2'), smoke: $('hero-smoke'), smA: $('smoke-a'), smB: $('smoke-b'), rule: $('rule'), intro: $('intro'), cta: $('gridcta'),
-    fade: ['cross', 'glow'].map($) };
+    fade: ['glow'].map($) };
   // Vehicle fade, driven by the hero's own scroll progress `p` (0..1), reversible. Opacity + translate only.
   const CAR = [[0, 1], [.1, .85], [.25, .55], [.4, .2], [.5, 0]], CAR_RISE = 30;
   function carOpacity(pp) {
