@@ -475,25 +475,19 @@
       </fieldset>
       <div class="two">
         <div class="field">
-          <label for="f-vehicle">Year, make &amp; model</label>
-          <input id="f-vehicle" name="vehicle" type="text" autocomplete="off">
-        </div>
-        <div class="field">
           <label for="f-where">Town or ZIP code *</label>
           <input id="f-where" name="location" type="text" autocomplete="postal-code" required aria-describedby="e-where">
           <p class="err" id="e-where" role="alert"></p>
         </div>
-      </div>
-      <div class="two">
         <div class="field">
           <label for="f-date">Convenient day *</label>
           <input id="f-date" name="preferred_date" type="date" required aria-describedby="e-date">
           <p class="err" id="e-date" role="alert"></p>
         </div>
-        <div class="field">
-          <label for="f-when">Preferred time of day</label>
-          <input id="f-when" name="preferred_times" type="text" placeholder="e.g. morning, after 5pm" autocomplete="off">
-        </div>
+      </div>
+      <div class="field">
+        <label for="f-when">Preferred time of day</label>
+        <input id="f-when" name="preferred_times" type="text" placeholder="e.g. morning, after 5pm" autocomplete="off">
       </div>
       <div class="field">
         <label for="f-msg">Anything we should know?</label>

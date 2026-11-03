@@ -143,7 +143,7 @@ const root = document.documentElement;
       subject: `Appointment request: ${labelOf(v('service'))} (${v('name')})`,
       name: v('name'), email: v('email'), phone: v('phone'),
       service: labelOf(v('service')), vehicle_type: v('vehicle_type'), interior: v('interior'),
-      condition_1_to_10: `${v('condition')} of 10 (10 = worst)`, vehicle: v('vehicle'), location: v('location'),
+      condition_1_to_10: `${v('condition')} of 10 (10 = worst)`, location: v('location'),
       preferred_date: v('preferred_date'), preferred_times: v('preferred_times'), message: v('message'),
       ...(/formsubmit\.co/.test(config.formEndpoint) && { _subject: `Appointment request: ${labelOf(v('service'))} (${v('name')})`, _template: 'table', _captcha: 'false' }),
       ...(config.formAccessKey && { access_key: config.formAccessKey }),
@@ -154,13 +154,14 @@ const root = document.documentElement;
     try {
       const res = await fetch(config.formEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload), signal: ctl.signal });
       let data = {}; try { data = await res.json(); } catch { /* non-JSON ok */ }
-      if (!res.ok || String(data.success) === 'false' || String(data.ok) === 'false') throw new Error('bad response');
+      if (!res.ok || String(data.success) === 'false' || String(data.ok) === 'false') { console.warn('Form service did not accept the request:', res.status, data); throw new Error('bad response'); }
       form.reset(); $$('.field', form).forEach(f => f.classList.remove('invalid'));
       status.className = 'status ok';
       status.textContent = 'Request sent. We will contact you to confirm a day and time. Your appointment is not booked until we confirm it, and a deposit payment alone does not reserve a time.';
     } catch {
       status.className = 'status bad';
-      status.textContent = 'Sorry, your request did not go through, so nothing was sent. Please try again in a moment.';
+      const alt = [config.phone && `call ${config.phone}`, config.email && `email ${config.email}`].filter(Boolean).join(' or ');
+      status.textContent = 'Sorry, your request did not go through, so nothing was sent. Please try again in a moment' + (alt ? `, or ${alt}.` : '.');
     } finally {
       clearTimeout(to); submit.disabled = false; submit.removeAttribute('aria-busy'); sp.remove(); label.textContent = 'Send appointment request';
       status.focus();
