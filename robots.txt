@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bigsosa-12.github.io/bs-supa-clean-cars-site/sitemap.xml
