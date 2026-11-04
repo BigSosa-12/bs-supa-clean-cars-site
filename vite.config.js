@@ -6,7 +6,7 @@ const cfg = JSON.parse(fs.readFileSync('./site.config.json', 'utf8'));
 const siteUrl = (process.env.SITE_URL || cfg.siteUrl || '').replace(/\/$/, '');
 const NAME = "B's Supa Clean Cars LLC";
 const DESC =
-  "Mobile interior car and SUV detailing in Battle Creek, Michigan and the surrounding 30-mile area. Flat prices, Stripe-secured deposits, and request-a-time booking.";
+  "Mobile interior car and SUV detailing in Battle Creek, Michigan and the surrounding 30-mile area. Clear prices, Stripe-secured deposits, and request-a-time booking. Open daily 9:30 am to 9 pm.";
 
 const offers = [
   ['Standard Service', 150], ['Deep Clean Package', 185], ['Supa Clean Package', 225],
@@ -27,6 +27,12 @@ const jsonld = {
     '@type': 'GeoCircle',
     geoMidpoint: { '@type': 'GeoCoordinates', latitude: 42.3212, longitude: -85.1797 },
     geoRadius: 48280,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+    opens: '09:30',
+    closes: '21:00',
   },
   award: `${cfg.award.title}, ${cfg.award.place}, ${cfg.award.category}`,
   makesOffer: offers,

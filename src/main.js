@@ -35,6 +35,11 @@ const root = document.documentElement;
   const show = (id, href, text) => { const li = $(id); if (!li) return; const a = $('a', li); a.href = href; a.textContent = text; li.hidden = false; list.hidden = false; };
   if (config.phone) show('#contact-phone', 'tel:' + config.phone.replace(/[^\d+]/g, ''), config.phone);
   if (config.email) show('#contact-email', 'mailto:' + config.email, config.email);
+  if (config.phone) {
+    const tel = '+1' + config.phone.replace(/\D/g, '').slice(-10);
+    const c = $('#mb-call'); if (c) c.href = 'tel:' + tel;
+    const x = $('#mb-text'); if (x) x.href = 'sms:' + tel + '?&body=' + encodeURIComponent("Hi, I'd like a quote from B's Supa Clean Cars.");
+  }
 })();
 
 /* ---------- Google profile link and rating (values come from site.config.json) ---------- */
@@ -177,4 +182,13 @@ const root = document.documentElement;
   try { const c = document.createElement('canvas'); const ctx = c.getContext('webgl2') || c.getContext('webgl'); gl = !!ctx; ctx?.getExtension('WEBGL_lose_context')?.loseContext(); } catch { gl = false; }
   if (reduce || !gl) { root.classList.add('static-hero'); return; }
   import('./hero.js').then(m => m.initHero()).catch(err => { console.warn('Hero animation unavailable:', err); root.classList.add('static-hero'); });
+})();
+
+
+/* ---------- mobile quick-action bar: appears once the hero is scrolled past ---------- */
+(() => {
+  const bar = document.getElementById('mbar'), track = document.querySelector('.hero-track');
+  if (!bar) return;
+  if (!track || !('IntersectionObserver' in window)) { bar.classList.add('on'); return; }
+  new IntersectionObserver(([e]) => bar.classList.toggle('on', !e.isIntersecting), { threshold: 0, rootMargin: '-15% 0px 0px 0px' }).observe(track);
 })();
