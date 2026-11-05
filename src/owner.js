@@ -116,15 +116,31 @@ function lineChart(host, days, series, opts) {
   host.prepend(svg);
 }
 
-/* ---- horizontal bars (label · bar · value) ---- */
+/* ---- glass-fluid meters ---- */
+const STEPS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000];
+const nextStep = (v) => STEPS.find((s) => s > v) || Math.ceil(v * 1.5);
+function fluid(color, value, max) {
+  const pct = Math.max(0, Math.min(1, max ? value / max : 0));
+  return h('div', { class: 'fluid' + (value > 0 ? ' has' : ''), style: '--c:' + color, 'data-w': (pct * 100).toFixed(2) + '%' });
+}
+function meter(o) {
+  return h('div', { class: 'meter' },
+    h('div', { class: 'mh' }, h('span', { class: 'ml', text: o.label }), h('span', { class: 'mv' }, h('b', { text: o.valueText }), o.maxText ? h('i', { text: ' / ' + o.maxText }) : null)),
+    h('div', { class: 'tube', role: 'meter', 'aria-label': o.label, 'aria-valuemin': '0', 'aria-valuemax': String(o.max), 'aria-valuenow': String(o.value), 'aria-valuetext': o.valueText + (o.maxText ? ' of ' + o.maxText : '') }, fluid(o.color, o.value, o.max)),
+    o.sub ? h('div', { class: 'ms', text: o.sub }) : null);
+}
+function fillMeters(root) { requestAnimationFrame(() => requestAnimationFrame(() => root.querySelectorAll('.fluid').forEach((f) => { f.style.width = f.dataset.w; }))); }
+
+/* ---- thin glass bars (label · tube · value) ---- */
 function hbars(host, rows, color) {
   host.replaceChildren();
   const max = Math.max(1, ...rows.map((r) => r.value));
   if (!rows.length) { host.append(h('p', { class: 'empty', text: 'Nothing yet for this period.' })); return; }
   for (const r of rows) host.append(h('div', { class: 'hb', title: `${r.label}: ${nf.format(r.value)}` },
     h('span', { class: 'lb', text: r.label }),
-    h('div', { class: 'tr' }, h('div', { class: 'bar', style: `width:${r.value ? Math.max(1.5, (r.value / max) * 100) : 0}%;background:${color}` })),
+    h('div', { class: 'tube thin', role: 'meter', 'aria-label': r.label, 'aria-valuemin': '0', 'aria-valuemax': String(max), 'aria-valuenow': String(r.value) }, fluid(color, r.value, max)),
     h('span', { class: 'vl', text: nf.format(r.value) })));
+  fillMeters(host);
 }
 
 /* ---- by-hour column chart ---- */
@@ -159,10 +175,6 @@ function delta(cur, prev) {
   const p = Math.round(((cur - prev) / prev) * 100);
   return (p > 0 ? '▲ ' : p < 0 ? '▼ ' : '') + (p === 0 ? 'same as' : Math.abs(p) + '%') + ' vs previous ' + days + ' days';
 }
-function kpi(label, key, tot, prev, extra) {
-  return h('div', { class: 'kpi' + (key === 'pay' ? ' key' : '') }, h('div', { class: 'k', text: label }), h('div', { class: 'n', text: nf.format(tot[key]) }), h('div', { class: 'd', text: extra || delta(tot[key], prev[key]) }));
-}
-
 function owned() { try { return localStorage.getItem('bs-owner') === '1'; } catch { return false; } }
 function setOwned(v) { try { v ? localStorage.setItem('bs-owner', '1') : localStorage.removeItem('bs-owner'); } catch { /* ignore */ } }
 
@@ -182,11 +194,15 @@ function render() {
     h('thead', null, h('tr', null, ['Day', 'Visitors', 'Calls', 'Texts', 'Deposit clicks', 'Book/quote', 'Requests sent'].map((x, i) => h('th', { class: i ? 'num' : '', text: x })))),
     h('tbody', null, data.days.map((d, i) => [i, d]).reverse().map(([i, d]) => h('tr', null, h('td', { text: dayLabel(d) }), [data.series.visitors[i], data.series.call[i], data.series.text[i], data.series.pay[i], data.series.request[i], data.series.form[i]].map((v) => h('td', { class: 'num', text: nf.format(v) })))))));
 
+  const mk1 = (label, key, color) => { const mx = nextStep(t[key]); return meter({ label, value: t[key], max: mx, valueText: nf.format(t[key]), maxText: nf.format(mx), color, sub: delta(t[key], p[key]) }); };
+  const metersEl = h('div', { class: 'meters' },
+    mk1('Visitors', 'visitors', 'var(--silver)'), mk1('Call taps', 'call', 'var(--s1)'), mk1('Text taps', 'text', 'var(--s2)'),
+    mk1('Deposit clicks', 'pay', 'var(--s3)'), mk1('Book / quote clicks', 'request', 'var(--silver)'), mk1('Requests sent', 'form', 'var(--silver)'),
+    meter({ label: 'Visitors who clicked Pay', value: Number(rate), max: 100, valueText: rate + '%', maxText: '100%', color: 'var(--s3)', sub: nf.format(t.payers) + ' of ' + nf.format(t.visitors) + ' visitors (counted per day)' }));
   app.replaceChildren(
     h('div', { class: 'top' }, h('div', null, h('p', { class: 'eyebrow', text: "B's Supa Clean Cars" }), h('h1', { text: 'Website analytics' })), h('div', { class: 'controls' }, range, h('button', { type: 'button', class: 'ghost', text: 'Refresh', onclick: () => load() }))),
     h('p', { class: 'note' }, h('strong', { text: 'Deposit clicks are conversions: ' }), 'each one is someone tapping a Pay deposit button. Stripe opens in a new tab, so this shows buying intent. Your Stripe dashboard shows which payments were actually completed.'),
-    h('div', { class: 'kpis' }, kpi('Visitors', 'visitors', t, p), kpi('Call taps', 'call', t, p), kpi('Text taps', 'text', t, p), kpi('Deposit clicks', 'pay', t, p), kpi('Book / quote clicks', 'request', t, p), kpi('Requests sent', 'form', t, p),
-      h('div', { class: 'kpi' }, h('div', { class: 'k', text: 'Visitors who clicked Pay' }), h('div', { class: 'n', text: rate + '%' }), h('div', { class: 'd', text: nf.format(t.payers) + ' of ' + nf.format(t.visitors) + ' visitors (counted per day)' }))),
+    h('section', { class: 'card meters-card' }, h('h2', { text: 'At a glance' }), h('p', { class: 'sub', text: 'Each bar fills toward the next milestone.' }), metersEl),
     h('div', { class: 'grid' },
       h('section', { class: 'card c12' }, h('h2', { text: 'Calls, texts and deposit clicks per day' }), h('p', { class: 'sub', text: 'Hover or tap the chart to read a day. Arrow keys work too.' }), legend, trend),
       h('section', { class: 'card c8' }, h('h2', { text: 'Visitors per day' }), h('p', { class: 'sub', text: 'Each person counted once per day. No cookies.' }), visits),
@@ -202,8 +218,9 @@ function render() {
     hourChart(hrs, data.hourly);
   };
   draw();
+  fillMeters(metersEl);
   hbars(pk, Object.keys(PKG).map((k) => ({ label: PKG[k], value: data.packages[k] || 0 })), 'var(--s3)');
-  hbars(src, data.sources.map((x) => ({ label: x.host || 'Direct', value: x.count })), 'var(--neutral)');
+  hbars(src, data.sources.map((x) => ({ label: x.host || 'Direct', value: x.count })), 'var(--silver)');
   let w = innerWidth, raf = 0;
   new ResizeObserver(() => { if (innerWidth === w) return; w = innerWidth; cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }).observe(document.body);
 }
