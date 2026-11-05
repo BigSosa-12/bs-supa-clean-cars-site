@@ -1,0 +1,14 @@
+name = "bs-supa-analytics"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+# Only pages served from these origins can send events / read stats from a browser.
+ALLOWED_ORIGINS = "https://bigsosa-12.github.io"
+# "1" = ignore obvious bots/crawlers (leave on in production).
+IGNORE_BOTS = "1"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bs-supa-analytics"
+database_id = "REPLACE_WITH_ID_PRINTED_BY_wrangler_d1_create"

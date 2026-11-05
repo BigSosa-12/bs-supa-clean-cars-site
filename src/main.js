@@ -5,6 +5,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import './styles.css';
 import config from '../site.config.json';
+import { track } from './track.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -162,6 +163,7 @@ const root = document.documentElement;
       if (!res.ok || String(data.success) === 'false' || String(data.ok) === 'false') { console.warn('Form service did not accept the request:', res.status, data); throw new Error('bad response'); }
       form.reset(); $$('.field', form).forEach(f => f.classList.remove('invalid'));
       status.className = 'status ok';
+      track('form', v('service') || 'unknown');
       status.textContent = 'Request sent. We will contact you to agree on your day. Your deposit and the agreed day set your appointment.';
     } catch {
       status.className = 'status bad';
@@ -187,8 +189,8 @@ const root = document.documentElement;
 
 /* ---------- mobile quick-action bar: appears once the hero is scrolled past ---------- */
 (() => {
-  const bar = document.getElementById('mbar'), track = document.querySelector('.hero-track');
+  const bar = document.getElementById('mbar'), heroTrack = document.querySelector('.hero-track');
   if (!bar) return;
-  if (!track || !('IntersectionObserver' in window)) { bar.classList.add('on'); return; }
-  new IntersectionObserver(([e]) => bar.classList.toggle('on', !e.isIntersecting), { threshold: 0, rootMargin: '-15% 0px 0px 0px' }).observe(track);
+  if (!heroTrack || !('IntersectionObserver' in window)) { bar.classList.add('on'); return; }
+  new IntersectionObserver(([e]) => bar.classList.toggle('on', !e.isIntersecting), { threshold: 0, rootMargin: '-15% 0px 0px 0px' }).observe(heroTrack);
 })();

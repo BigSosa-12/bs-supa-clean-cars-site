@@ -412,3 +412,8 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;bac
 }
 @media (prefers-reduced-motion:reduce){.mbar,.mbar.on{transition:none}}
 @media (prefers-reduced-transparency:reduce){.mbar{background:#0e0e10;-webkit-backdrop-filter:none;backdrop-filter:none}}
+
+/* discreet owner link */
+.owner-link{text-align:center;margin:6px 0 0;font-size:11px;line-height:1}
+.owner-link a{color:var(--mid);text-decoration:none;padding:8px 10px;display:inline-block}
+.owner-link a:hover{color:var(--ink)}
