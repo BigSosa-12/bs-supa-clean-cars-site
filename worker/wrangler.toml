@@ -11,4 +11,4 @@ IGNORE_BOTS = "1"
 [[d1_databases]]
 binding = "DB"
 database_name = "bs-supa-analytics"
-database_id = "REPLACE_WITH_ID_PRINTED_BY_wrangler_d1_create"
+database_id = "dd03f6b2-6ba6-475c-9245-58bc2d87cd08"
