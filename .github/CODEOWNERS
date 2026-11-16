@@ -1,0 +1,6 @@
+# Every change, and especially anything in .github/, the Worker and the build config, needs the owner's review.
+*                    @BigSosa-12
+/.github/            @BigSosa-12
+/worker/             @BigSosa-12
+/vite.config.js      @BigSosa-12
+/site.config.json    @BigSosa-12

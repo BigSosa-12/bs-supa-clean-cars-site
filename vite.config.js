@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import fs from 'node:fs';
 import { resolve } from 'node:path';
+import { createHash } from 'node:crypto';
 
 const cfg = JSON.parse(fs.readFileSync('./site.config.json', 'utf8'));
 const siteUrl = (process.env.SITE_URL || cfg.siteUrl || '').replace(/\/$/, '');
@@ -50,14 +51,40 @@ const head = (page) =>
     <meta name="twitter:image" content="${siteUrl}/og-image.jpg">`
     : '';
 
+// Security: a strict Content-Security-Policy, injected into every built page. Visitors can read and use the site
+// normally; the browser refuses any script, frame, form post or network call that is not on this allow-list, so
+// injected code cannot run or send data anywhere else. Hosts come from site.config.json so they never drift.
+const origin = (u) => { try { return new URL(u).origin; } catch { return ''; } };
+const connectHosts = [origin(cfg.analyticsEndpoint), origin(cfg.formEndpoint)].filter(Boolean);
+const formHosts = [origin(cfg.formEndpoint)].filter(Boolean);
+const csp = (html) => {
+  const hashes = [...html.matchAll(/<script>([^<]+)<\/script>/g)]
+    .map((m) => `'sha256-${createHash('sha256').update(m[1]).digest('base64')}'`);
+  return [
+    "default-src 'self'",
+    `script-src 'self' ${hashes.join(' ')}`.trim(),
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob:",
+    "font-src 'self' data:",
+    `connect-src 'self' ${connectHosts.join(' ')}`.trim(),
+    `form-action 'self' ${formHosts.join(' ')}`.trim(),
+    "base-uri 'self'", "object-src 'none'", "frame-src 'none'", "worker-src 'self' blob:", "manifest-src 'self'",
+    'upgrade-insecure-requests',
+  ].join('; ');
+};
+
 function sitePlugin() {
   return {
     name: 'site-tokens',
     transformIndexHtml(html, ctx) {
       const page = ctx.filename.endsWith('index.html') ? '' : ctx.path.replace(/^\//, '');
-      return html
+      const out = html
         .replace('<!--SEO-->', head(page))
         .replace('<!--JSONLD-->', page === '' ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : '');
+      if (ctx.server) return out; // dev server needs inline HMR scripts, so no policy there
+      return out.replace('<head>', `<head>
+    <meta http-equiv="Content-Security-Policy" content="${csp(out)}">
+    <meta name="referrer" content="strict-origin-when-cross-origin">`);
     },
     generateBundle() {
       this.emitFile({

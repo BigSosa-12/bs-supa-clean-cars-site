@@ -1,3 +1,5 @@
+// Anti-clickjacking: if another site loads this page inside a frame, hide it so nobody can be tricked into clicking.
+if (window.top !== window.self) document.documentElement.style.display = "none";
 import '@fontsource/inter-tight/400.css';
 import '@fontsource/inter-tight/600.css';
 import '@fontsource/ibm-plex-mono/500.css';
